@@ -2,6 +2,8 @@ package com.examsheduler.examscheduler.service;
 
 import com.examsheduler.examscheduler.models.Exams;
 import com.examsheduler.examscheduler.repository.ExamRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ExamService implements ExamServiceInterface{
+    private static final Logger log = LoggerFactory.getLogger(ExamService.class);
     private final ExamRepository repository;
 
     public ExamService(ExamRepository repository){
@@ -37,5 +40,14 @@ public class ExamService implements ExamServiceInterface{
         return repository.findAll().stream()
                 .filter(exam ->exam.getCourseName().toLowerCase().contains(course.toLowerCase()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Exams createNewExam(Exams exam, Long id) {
+        if(repository.findById(id).isPresent()){
+            log.info("cannot create exam since it already exists");
+            throw new RuntimeException();
+        }
+        return repository.save(exam);
     }
 }

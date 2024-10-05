@@ -5,11 +5,9 @@ import com.examsheduler.examscheduler.service.ExamServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.swing.plaf.ColorUIResource;
 import java.util.List;
 
 @RestController
@@ -25,7 +23,7 @@ public class ExamController {
         return new ResponseEntity<>(service.findAllExams(), HttpStatus.OK);
     }
     @GetMapping("/get/id")
-    public  ResponseEntity<Exams> getExamsById(@RequestParam Long id){
+    public ResponseEntity<Exams> getExamsById(@RequestParam Long id){
         return new ResponseEntity<>(service.getExamsById(id),HttpStatus.OK);
     }
     @GetMapping("/get/unit-name")
@@ -34,6 +32,10 @@ public class ExamController {
     }
     @GetMapping("/get/course-name")
     public ResponseEntity<List<Exams>> getExamByCourseName(@RequestParam String course){
-
+        return new ResponseEntity<>(service.getExamByCourseName(course),HttpStatus.OK);
+    }
+    @PostMapping("/create/new-exam")
+    public ResponseEntity<Exams> createNewExam(@RequestBody Exams exam,@RequestParam Long id){
+        return new ResponseEntity<>(service.createNewExam(exam,id),HttpStatus.OK);
     }
 }

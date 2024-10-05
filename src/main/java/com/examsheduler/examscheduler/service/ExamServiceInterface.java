@@ -9,4 +9,5 @@ public interface ExamServiceInterface {
     Exams getExamsById(Long id);
     List<Exams> getExamsByUnitName(String name);
     List<Exams> getExamByCourseName(String course);
+    Exams createNewExam(Exams exam,Long id);
 }
