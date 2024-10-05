@@ -50,4 +50,33 @@ public class ExamService implements ExamServiceInterface{
         }
         return repository.save(exam);
     }
+
+    @Override
+    public Exams updateExistingExam(Exams exam, Long id) {
+        if(repository.findById(id).isEmpty()){
+            throw new RuntimeException("exam does not exist");
+        }
+        else {
+            repository.deleteById(id);
+        }
+        return repository.save(exam);
+    }
+    @Override
+    public void deleteAllExams(){
+        repository.deleteAll();
+    }
+    @Override
+    public void deleteExamById(Long id) throws RuntimeException{
+        if(repository.findById(id).isPresent()){
+            repository.deleteById(id);
+        }else{
+            throw new RuntimeException("EXAM NOT FOUND");
+        }
+    }
+    @Override
+    public List<Exams> getExamsByTheirVenue(String building){
+        return repository.findAll().stream()
+                .filter(exams ->exams.getBuilding().toLowerCase().contains(building.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 }
