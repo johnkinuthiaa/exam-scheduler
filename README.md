@@ -1,5 +1,8 @@
 # **Springboot Exam Scheduler**
 **This project is a web application designed to streamline the exam scheduling process. It's built using Maven, Spring Boot, and SQL for a robust and efficient solution.**
+## Use case ##
+- **schedule normal exams**
+- **schedule Historic exams such as end of course exams,special,supplementary and retakes**
 ## Prerequisites
 **Before running the project, ensure you have the following installed:**
 
