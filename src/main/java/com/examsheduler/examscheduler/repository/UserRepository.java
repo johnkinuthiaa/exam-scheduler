@@ -1,4 +1,7 @@
 package com.examsheduler.examscheduler.repository;
 
-public interface UserRepository {
+import com.examsheduler.examscheduler.models.UserModel;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<UserModel,Long> {
 }
