@@ -1,9 +1,13 @@
 package com.examsheduler.examscheduler.controller;
 
 import com.examsheduler.examscheduler.models.Exams;
+import com.examsheduler.examscheduler.models.UserModel;
 import com.examsheduler.examscheduler.service.ExamServiceInterface;
+import com.examsheduler.examscheduler.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +20,7 @@ public class ExamController {
     public ExamController(ExamServiceInterface service){
         this.service=service;
     }
+
     @GetMapping("/get/all-exams")
     public ResponseEntity<List<Exams>> findAllExams(){
         return new ResponseEntity<>(service.findAllExams(), HttpStatus.OK);

@@ -1,7 +1,6 @@
 package com.examsheduler.examscheduler.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -9,6 +8,7 @@ import java.time.LocalDate;
 
 public class Exams {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String courseName;
     private String unitTitle;
@@ -18,17 +18,20 @@ public class Exams {
     private String building;
     private String examRoom;
 
+    @ManyToOne
+    private UserModel userModel;
+
     public Exams(){}
-    public Exams(Long id,
+    public Exams(
                  String courseName,
                  String unitTitle,
                  LocalDate examPaperDate,
                  LocalDate paperStartTime,
                  LocalDate paperEndingTime,
                  String building,
-                 String examRoom
+                 String examRoom,
+                 UserModel userModel
     ){
-        this.id=id;
         this.courseName=courseName;
         this.unitTitle=unitTitle;
         this.examPaperDate=examPaperDate;
@@ -36,7 +39,17 @@ public class Exams {
         this.paperEndingTime =paperEndingTime;
         this.building=building;
         this.examRoom=examRoom;
+        this.userModel=userModel;
     }
+
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
     public void setId(Long id){
         this.id=id;
     }
