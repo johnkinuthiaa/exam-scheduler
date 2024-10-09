@@ -2,6 +2,7 @@ package com.examsheduler.examscheduler.models;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -16,20 +17,20 @@ public class UserModel implements UserDetails{
     private String email;
     private String mobileNumber;
     private String password;
+    private String role;
 
     @OneToMany(mappedBy = "UserModel")
     private List<Exams> exams;
-    @Transient
-    private Collection<? extends GrantedAuthority > authorities;
+
 
     public UserModel(){}
-    public UserModel(String userName,String email,String mobileNumber,String password,List<Exams> exams,Collection<? extends GrantedAuthority > authorities){
+    public UserModel(String userName,String email,String mobileNumber,String password,List<Exams> exams,String role){
         this.userName=userName;
         this.email=email;
         this.mobileNumber=mobileNumber;
         this.password=password;
         this.exams=exams;
-        this.authorities=authorities;
+        this.role =role;
     }
     public void setId(Long id){
         this.id=id;
@@ -42,12 +43,6 @@ public class UserModel implements UserDetails{
     }
     public List<Exams> getExams(){
         return exams;
-    }
-    public void setAuthorities(Collection<? extends GrantedAuthority > authorities){
-        this.authorities=authorities;
-    }
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
     }
 
     public void setUserName(String userName){
@@ -75,6 +70,11 @@ public class UserModel implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     public String getPassword(){
