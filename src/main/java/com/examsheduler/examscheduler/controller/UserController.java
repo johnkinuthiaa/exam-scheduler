@@ -4,8 +4,7 @@ import com.examsheduler.examscheduler.models.UserModel;
 import com.examsheduler.examscheduler.service.UserServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +16,10 @@ public class UserController {
     public UserController(UserServiceInterface service){
         this.service=service;
     }
-
-    @GetMapping("/all")
+    @GetMapping(
+            value = "/all",
+            produces ={"application/json"}
+    )
     public ResponseEntity<List<UserModel>> getAllUsers(){
         return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
     }
@@ -38,7 +39,10 @@ public class UserController {
     public ResponseEntity<UserModel> createNewStudent(@RequestParam String username,@RequestParam String email,@RequestParam String phoneNumber,@RequestParam String password){
         return new ResponseEntity<>(service.createNewStudent(username,email,phoneNumber,password),HttpStatus.OK);
     }
-    @DeleteMapping("/delete/id")
+    @DeleteMapping(
+            value = "/delete/id",
+            produces = {"application/json"}
+    )
     public void deleteUserById(@RequestParam Long id){
         service.deleteUserById(id);
     }
